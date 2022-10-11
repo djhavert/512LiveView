@@ -18,9 +18,10 @@ void ImGuiWindowLive::Init()
 void ImGuiWindowLive::Create()
 {
   ImGui::Begin("LiveView");
-  OscilliscopeDraw();
-  SpikeSummaryDraw();
+  //OscilliscopeDraw();
+  //SpikeSummaryDraw();
   PsthDraw();
+  ImGui::End();
 }
 
 void ImGuiWindowLive::LoadElMap()
@@ -144,17 +145,19 @@ void ImGuiWindowLive::SpikeSummaryDraw()
   }
   
 
-  ImGui::End();
+  //ImGui::End();
 }
 
 void ImGuiWindowLive::UpdatePsthChannnelList()
 {
+  LOG("Update psth channel list");
   std::vector<int> stim_channels = Application::Get().GetDataPtr()->GetStimChannelsVec();
   for (auto it = stim_channels.begin(); it != stim_channels.end(); it++)
   {
     psth_channel_list_int.push_back(*it);
     psth_channel_list_string.push_back(std::to_string(*it));
   }
+  LOG("Psth channel list updated");
 }
 
 void ImGuiWindowLive::PsthDraw()
@@ -164,7 +167,8 @@ void ImGuiWindowLive::PsthDraw()
     return;
   }
   /* Box to Select which Stimulated Channel's PSTH to show */
-  ImGui::Begin("PSTH");
+  //ImGui::Begin("PSTH");
+  //LOG("Begin PSTH Stim Channels ListBox");
   if (ImGui::BeginListBox("Stimulated Channel"))
   {
     for (size_t n = 0; n < psth_channel_list_string.size(); n++)
@@ -181,13 +185,19 @@ void ImGuiWindowLive::PsthDraw()
   }
 
   /* Plot the PSTH */
+  //LOG("PSTH PLOT");
   if (ImPlot::BeginPlot("PSTH")) {
     ImPlot::SetNextFillStyle(IMPLOT_AUTO_COL, 0.5f);
     std::vector<int> psth_data = Application::Get().GetDataPtr()->GetPSTHData(psth_channel_list_int[psth_channel_idx]);
-    ImPlot::PlotHistogram("Empirical", &psth_data[0], psth_data.size(), bins, cumulative, density, ImPlotRange(), outliers);
+    if (psth_data.begin() != psth_data.end())
+    {
+      //LOG("Plot");
+      ImPlot::PlotHistogram("Empirical", &psth_data[0], psth_data.size(), bins, cumulative, density, ImPlotRange(), outliers);
+    }
     ImPlot::EndPlot();
   }
 
-  ImGui::End();
+  //
+  //LOG("PSTH plotted");
 }
 
