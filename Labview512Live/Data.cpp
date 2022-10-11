@@ -247,20 +247,24 @@ void Data::ClearOldSpikes()
 void Data::AddSpikeToPSTH(int ch, unsigned int time)
 {
 	UpdateStimTracker();
+	LOG("Add Spike to PSTH");
 	for (auto it = stim_event_tracker.begin(); it != stim_event_tracker.end(); it++)
 	{
 		int time_diff = time - (*it)->GetTime();
+		int stim_ch = (*it)->channel;
 		if (time_diff > PSTH_DEADZONE && time_diff < PSTH_MAX_RANGE)
 		{
 			// lock thread and push value into psth_data
 			std::lock_guard<std::mutex> guard(psth_mutex);
-			psth_data.at(ch).push_back(time_diff);
+			psth_data.at(stim_ch).push_back(time_diff);
 		}
 	}
+	LOG("Spike Added to PSTH");
 }
 
 void Data::UpdateStimTracker()
 {
+	LOG("Update Stim Tracker");
 	if (!stim_tracker_updated_this_frame)
 	{
 		// Add any stim events triggered in the current analysis frame
@@ -276,6 +280,7 @@ void Data::UpdateStimTracker()
 		}
 		stim_tracker_updated_this_frame = true;
 	}	
+	LOG("Stim Tracker Updated");
 }
 
 /*
