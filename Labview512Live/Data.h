@@ -60,17 +60,17 @@ private:
   bool online = true;
   bool psth = false;
   bool spike_sorting = false;
-  bool find_avalanches = false;
+  bool find_avalanches = false; // TODO: Implement live avalanche analysis
   std::atomic<unsigned int> samples_parsed = 0;
   std::atomic<unsigned int> samples_analyzed = 0;
   std::deque<Spike> spikes;
 
-  // Average and Noise Calculations (once per second)
+  // Raw Data buffer
   std::deque<std::vector<short>*> data_ol; // Sample Number by Channel Number. 
     // Will expand and contract automatically as needed. Data will only be 
     // popped after it is analyzed.
+  // Pointer to next raw data sample
   std::vector<short>* next_sample_ptr;
-  // poi
   unsigned int to_analyze = 0; // which element in data_ol is next to be analyzed.
     // Analysis will keep running, front popping data every time until to_analyze
     // is the same size as data_ol
@@ -98,7 +98,8 @@ private:
   StimEvent* next_stim_event;
   bool stim_tracker_updated_this_frame = false;
   std::deque<StimEvent*> stim_event_tracker;
-  std::map<int, std::vector<int>> psth_data;
+  std::map<int, std::vector<int>> psth_data; // maps stim ch to spike time
+  // TODO: Map to spike time and spike channel to allow ability to see response on individual channels
   void UpdateStimTracker();
   void AddSpikeToPSTH(int ch, unsigned int time);
 

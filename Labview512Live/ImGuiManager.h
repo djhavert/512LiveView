@@ -12,6 +12,8 @@
 #include "ImGuiWindowConnect.h"
 #include "ImguiWindowLive.h"
 
+#include "GLFW\glfw3.h"
+
 class ImGuiManager
 {
 public:

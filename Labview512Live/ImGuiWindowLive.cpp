@@ -18,9 +18,9 @@ void ImGuiWindowLive::Init()
 void ImGuiWindowLive::Create()
 {
   ImGui::Begin("LiveView");
-  //OscilliscopeDraw();
-  //SpikeSummaryDraw();
-  PsthDraw();
+  OscilliscopeDraw();
+  SpikeSummaryDraw();
+  //PsthDraw();
   ImGui::End();
 }
 
@@ -57,7 +57,8 @@ void ImGuiWindowLive::LoadElMap()
 
 void ImGuiWindowLive::OscilliscopeDraw()
 {
-  //ImGui::Begin("Oscilliscope");
+  ImGui::Begin("Oscilliscope");
+
   if (ImGui::BeginListBox("Channel"))
   {
     for (int n = 0; n < 512; n++)
@@ -92,15 +93,16 @@ void ImGuiWindowLive::OscilliscopeDraw()
     ImVec4 col = { 0.11f, .86f, .90f, .7f };
     //LOG("PLOT NOISE");
     ImPlot::SetNextLineStyle(col);
-    ImPlot::PlotHLines("mean and threshold", noise, 2);
+    ImPlot::PlotInfLines("mean and threshold", noise, 2,ImPlotInfLinesFlags_Horizontal);
     //LOG("END PLOT");
     ImPlot::EndPlot();
   }
+  ImGui::End();
 }
 
 void ImGuiWindowLive::SpikeSummaryDraw()
 {
-  //ImGui::Begin("Spike Summary");
+  ImGui::Begin("Spike Summary");
 
   /* Plot the Array with Electrode Numbers */
   if (ImPlot::BeginPlot("Spikes",ImVec2(-1, -1),ImPlotFlags_Equal))
@@ -145,7 +147,7 @@ void ImGuiWindowLive::SpikeSummaryDraw()
   }
   
 
-  //ImGui::End();
+  ImGui::End();
 }
 
 void ImGuiWindowLive::UpdatePsthChannnelList()
@@ -192,7 +194,7 @@ void ImGuiWindowLive::PsthDraw()
     if (psth_data.begin() != psth_data.end())
     {
       //LOG("Plot");
-      ImPlot::PlotHistogram("Empirical", &psth_data[0], psth_data.size(), bins, cumulative, density, ImPlotRange(), outliers);
+      ImPlot::PlotHistogram("Empirical", &psth_data[0], psth_data.size(), bins, 1.0, ImPlotRange(), ImPlotHistogramFlags_None);
     }
     ImPlot::EndPlot();
   }

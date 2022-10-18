@@ -5,7 +5,7 @@
 
 Data::Data()
 {
-	/*
+	/* OLD METHOD TO WRITE DATA TO FILE FOR TESTING. DEPRECATED.
 	if (b_write_to_file)
 	{
 		OpenFile();
@@ -46,8 +46,9 @@ void Data::set(int ch, unsigned int sample, short value)
 	{
 		// lock thread
 		std::lock_guard<std::mutex> guard(data_mutex);
+		// add full sample to end of raw data buffer
 		data_ol.push_back(next_sample_ptr);
-		// unlock thread
+		// create new pointer for next sample
 		next_sample_ptr = new std::vector<short>(ELECTRODE_ARRAY_SIZE, 0);
 		samples_parsed++;
 	}
@@ -267,7 +268,7 @@ void Data::UpdateStimTracker()
 	LOG("Update Stim Tracker");
 	if (!stim_tracker_updated_this_frame)
 	{
-		// Add any stim events triggered in the current analysis frame
+		// Add any stim events occuring in the current analysis frame
 		while (next_stim_event->GetTime() <= samples_analyzed)
 		{
 			stim_event_tracker.push_back(next_stim_event);

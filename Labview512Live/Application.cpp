@@ -54,9 +54,9 @@ void Application::AnalyzeData()
 
 void Application::Render()
 {
-  imgui_manager.Render();
   glViewport(0, 0, window.GetWidth(), window.GetHeigth());
   glClear(GL_COLOR_BUFFER_BIT);
+  imgui_manager.Render();
 }
 
 void Application::Draw()
