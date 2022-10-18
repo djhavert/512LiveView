@@ -34,6 +34,7 @@ bool ImGuiManager::Init()
 	ImPlot::CreateContext();
 	imgui_io = &(ImGui::GetIO()); //(void)io;
 	ImGui::StyleColorsDark();
+	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	//ImGui_ImplGlfw_InitForOpenGL(window, true);
 
   return true;
@@ -72,6 +73,14 @@ void ImGuiManager::Render()
 void ImGuiManager::Draw()
 {
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	if (imgui_io->ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		GLFWwindow* backup_current_context = glfwGetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		glfwMakeContextCurrent(backup_current_context);
+	}
 }
 
 void ImGuiManager::DisplayStartup(bool b)

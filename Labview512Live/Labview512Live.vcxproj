@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include\;$(SolutionDir)Dependencies\glad\include\;$(SolutionDir)Dependencies\imgui\;$(SolutionDir)Dependencies\implot\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include\;$(SolutionDir)Dependencies\glad\include\;$(SolutionDir)Dependencies\imgui-dock\;$(SolutionDir)Dependencies\implot\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -106,7 +106,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include\;$(SolutionDir)Dependencies\glad\include\;$(SolutionDir)Dependencies\imgui\;$(SolutionDir)Dependencies\implot\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include\;$(SolutionDir)Dependencies\glad\include\;$(SolutionDir)Dependencies\imgui-dock\;$(SolutionDir)Dependencies\implot\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,19 +147,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c" />
-    <ClCompile Include="..\Dependencies\imgui\imgui.cpp" />
-    <ClCompile Include="..\Dependencies\imgui\imgui_demo.cpp" />
-    <ClCompile Include="..\Dependencies\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\Dependencies\imgui\imgui_impl_glfw.cpp" />
-    <ClCompile Include="..\Dependencies\imgui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="..\Dependencies\imgui\imgui_impl_win32.cpp" />
-    <ClCompile Include="..\Dependencies\imgui\imgui_stdlib.cpp" />
-    <ClCompile Include="..\Dependencies\imgui\imgui_tables.cpp" />
-    <ClCompile Include="..\Dependencies\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-dock\imgui.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-dock\imgui_draw.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-dock\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-dock\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-dock\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-dock\imgui_stdlib.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-dock\imgui_tables.cpp" />
+    <ClCompile Include="..\Dependencies\imgui-dock\imgui_widgets.cpp" />
+    <ClCompile Include="..\Dependencies\implot\implot.cpp" />
+    <ClCompile Include="..\Dependencies\implot\implot_items.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Data.cpp" />
-    <ClCompile Include="dependencies\implot.cpp" />
-    <ClCompile Include="dependencies\implot_items.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="ImGuiWindowBase.cpp" />
@@ -173,10 +172,11 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Dependencies\imgui-dock\imconfig.h" />
+    <ClInclude Include="..\Dependencies\imgui-dock\imgui_internal.h" />
+    <ClInclude Include="..\Dependencies\implot\implot_internal.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Data.h" />
-    <ClInclude Include="dependencies\implot.h" />
-    <ClInclude Include="dependencies\implot_internal.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="ImGuiWindowBase.h" />
